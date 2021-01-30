@@ -1,0 +1,13 @@
+<div class="row justify-content-center text-light" *ngIf="pageScrolled">
+  <!-- if we are scrolling on an xs or sm screen, display the current month and year if scrolled-->
+  <button class="btn text-light" disabled>{{month[selectedDate.month]}}, {{selectedDate.year}}</button>
+</div>
+
+<div class="row h-100 align-content-start no-scrollbar" (scroll)="onScrollEvent($event)"
+  [ngClass]="{'overflow-auto': screenSize === 'xs' || screenSize === 'sm', 'overflow-hidden': screenSize !== 'xs' && screenSize !== 'sm'}">
+  <div class="col-12 h-100">
+    <app-calendar (selectedDate)="setDate($event)" [markedDates]="markedDates" [pageScrolled]="pageScrolled">
+    </app-calendar>
+    <app-list [selectedDate]="selectedDate" (markedDates)="setMarkedDates($event)" [toggleMode] = "'monthly'"></app-list>
+  </div>
+</div>

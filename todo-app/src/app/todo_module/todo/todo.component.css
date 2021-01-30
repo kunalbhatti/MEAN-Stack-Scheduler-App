@@ -1,0 +1,11 @@
+.rounded-border{
+    border-radius: 20px;
+}
+
+.click-animation {
+    transition: 0.1s;
+}
+
+a{
+    text-decoration: none;
+}

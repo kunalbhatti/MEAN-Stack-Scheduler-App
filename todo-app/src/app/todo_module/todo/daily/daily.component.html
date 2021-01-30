@@ -1,0 +1,31 @@
+<div class="row align-content-start justify-content-center text-light h-100">
+    <div class="col-12 h5 mt-1 d-flex align-items-start justify-content-center" style="height: 5%;">
+      <div class="col-12 h5 mt-1 d-flex align-items-start justify-content-center" style="height: 15%;">
+        <!-- Get Previous Month -->
+      <button class="btn pointer text-light" (click)="selectedDate.day = selectedDate.day - 1; getList()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+          class="bi bi-chevron-double-left" viewBox="0 0 16 16">
+          <path fill-rule="evenodd"
+            d="M8.354 1.646a.5.5 0 0 1 0 .708L2.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z" />
+          <path fill-rule="evenodd"
+            d="M12.354 1.646a.5.5 0 0 1 0 .708L6.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z" />
+        </svg>
+      </button>
+      <!-- Display the Month and th Selected -->
+      <button disabled class="btn text-light">{{months[selectedDate?.month]}} {{selectedDate?.day}}, {{selectedDate?.year}}</button>
+      <!-- Get Next Month -->
+      <button class="btn pointer text-light" (click)="selectedDate.day = selectedDate.day + 1; getList()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+          class="bi bi-chevron-double-right" viewBox="0 0 16 16">
+          <path fill-rule="evenodd"
+            d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708z" />
+          <path fill-rule="evenodd"
+            d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708z" />
+        </svg>
+      </button>
+    </div>
+  </div>
+  <div class="col-12 overflow-auto no-scrollbar" style="height: 95%;">
+    <app-list [selectedDate]="selectedDate" [toggleMode] = "'daily'"></app-list>
+  </div>
+</div>

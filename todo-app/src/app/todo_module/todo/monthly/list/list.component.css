@@ -1,0 +1,46 @@
+.list-group-item {
+  background-color: #2b2a2a;
+  color: white;
+}
+
+.list-group-item:hover {
+  background-color: #332f2f;
+}
+
+.monthly__list-display {
+  height: 43%;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+}
+
+.daily__list-display {
+  height: 90%;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+}
+
+.dropdown-item:hover {
+  background-color: slateblue;
+}
+
+.action-alert {
+  opacity: 1;
+  animation: fade 5s linear;
+}
+
+.toast-display {
+  bottom: 10px;
+  right: 10px;
+}
+
+@keyframes fade {
+
+  0%,
+  100% {
+    opacity: 0
+  }
+
+  50% {
+    opacity: 1
+  }
+}

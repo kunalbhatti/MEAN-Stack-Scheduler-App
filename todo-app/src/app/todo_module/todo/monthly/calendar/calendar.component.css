@@ -1,0 +1,35 @@
+.selected-date {
+  -webkit-box-shadow: inset 0px 0px 0px 3px #ccc6c633;
+  -moz-box-shadow: inset 0px 0px 0px 3px #ccc6c633;
+  box-shadow: inset 0px 0px 0px 3px #ccc6c633 !important;
+}
+
+.marked-date {
+  -webkit-box-shadow: inset 0px -2px 0px -1px tomato;
+  -moz-box-shadow: inset 0px -2px 0px -1px tomato;
+  box-shadow: inset 0px -2px 0px -1px tomato;
+}
+
+.cal {
+  margin: 1px;
+  border: solid 1px #928c8c33;
+}
+
+.cal:hover {
+  background-color: #3f3c3c;
+  font-weight: bolder;
+  transition: 0.1s;
+}
+
+.today {
+  background-color: #2d2d2d;
+  font-weight: bolder;
+}
+
+.selected-marked {
+  height: 7px;
+  width: 7px;
+  background-color: tomato;
+  border-radius: 100%;
+  display: inline-block;
+}

@@ -1,0 +1,47 @@
+<div class="row h-100 registration__bg-color text-light">
+  <div class="col-12">
+    <div class="row h-100 align-content-center justify-content-center">
+      <div class="col-12 display-4 text-center mb-5">My Scheduler</div>
+      <div class="col-10 col-lg-4 border rounded pt-3">
+        <form #f="ngForm" (ngSubmit)="onRegister(f)">
+          <div class="form-group">
+            <label for="name">Name:</label>
+            <input id="name" class="form-control" type="text" placeholder="Name" name="name" ngModel required>
+          </div>
+          <div class="form-group">
+            <label for="email">Email Address:</label>
+            <input id="email" class="form-control" type="text" placeholder="Email Id" name="email" ngModel required
+              email>
+          </div>
+          <div class="form-group">
+            <label for="password">Password:</label>
+            <input id="password" class="form-control" type="password" placeholder="Password" name="password"
+              [(ngModel)]="pswd" required minlength=6 maxlength="15">
+          </div>
+          <div class="form-group">
+            <label for="confirm_password">Confirm Password:</label>
+            <input id="confirm_password" class="form-control" type="password" placeholder="Confirm Password"
+              name="password2" [(ngModel)]="confirmPswd" required minlength=6 maxlength="15">
+          </div>
+          <small class="form-text text-danger" *ngIf="!valid">*{{message}}</small>
+          <div class="form-group mt-4">
+            <button class="btn btn-success" type="submit"
+              [disabled]="!((f.form.valid) && (pswd === confirmPswd))">Register</button>
+          </div>
+        </form>
+        <div class="row align-content-center border-top">
+          <div class="col-12 text-center">
+            <button [routerLink]="['/', 'auth', 'login']" class="btn btn-link text-warning">
+              <small>Log In</small>
+            </button>
+            <span> - </span>
+            <button [routerLink]="['/', 'auth', 'password-recovery']" class="btn btn-link text-danger">
+              <small>Forgot Password</small>
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

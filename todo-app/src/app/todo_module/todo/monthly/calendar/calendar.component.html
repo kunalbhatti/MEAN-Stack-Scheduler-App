@@ -1,0 +1,66 @@
+<div class="row align-content-start text-light">
+  <div class="col-12 h5 mt-1 d-flex align-items-start justify-content-center" style="height: 15%;">
+      <!-- Get Previous Month -->
+    <button [disabled] = "pageScrolled" class="btn pointer text-light" (click)="monthCount = monthCount - 1; getDates(year, monthCount)">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+        class="bi bi-chevron-double-left" viewBox="0 0 16 16">
+        <path fill-rule="evenodd"
+          d="M8.354 1.646a.5.5 0 0 1 0 .708L2.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z" />
+        <path fill-rule="evenodd"
+          d="M12.354 1.646a.5.5 0 0 1 0 .708L6.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z" />
+      </svg>
+    </button>
+    <!-- Display the Month and th Selected -->
+    <button disabled class="btn text-light">{{selectedMonth}}, {{year}}</button>
+    <!-- Get Next Month -->
+    <button [disabled] = "pageScrolled" class="btn pointer text-light" (click)="monthCount = monthCount + 1; getDates(year, monthCount)">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+        class="bi bi-chevron-double-right" viewBox="0 0 16 16">
+        <path fill-rule="evenodd"
+          d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708z" />
+        <path fill-rule="evenodd"
+          d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708z" />
+      </svg>
+    </button>
+  </div>
+  <div class="col-12 mt-n2" style="height: 85%;">
+    <div class="row justify-content-center h-100">
+      <div class="col-11 col-sm-7 col-md-6 text-center">
+        <div class="row">
+          <div class="col-12">
+            <div class="row text-warning mb-1">
+              <div class="col p-2">Mo</div>
+              <div class="col p-2">Tu</div>
+              <div class="col p-2">We</div>
+              <div class="col p-2">Th</div>
+              <div class="col p-2">Fr</div>
+              <div class="col p-2">Sa</div>
+              <div class="col p-2">Su</div>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="row" *ngFor="let date of dates; let j = index;">
+              <button class="btn rounded-0 text-light col p-2 pointer cal"
+                [disabled]="(7*j) + i < firstDayIndex || (7*j) + i > lastDayIndex"
+                (click)="getList(monthCount, year, day, false);" [ngClass]="{'text-muted': (7*j) + i < firstDayIndex || (7*j) + i > lastDayIndex, 
+                'today': day === today.getDate() && monthCount === today.getMonth() && year === today.getFullYear() && (7*j+i >= firstDayIndex && 7*j+i <= lastDayIndex),
+                'selected-date': day === selectedDateButton && (7*j+i >= firstDayIndex && 7*j+i <= lastDayIndex),
+                'marked-date': markedDates?.indexOf(day) !== -1 && (7*j+i >= firstDayIndex && 7*j+i <= lastDayIndex)
+                }" *ngFor="let day of date; let i = index;">
+                <!-- (7*j+i >= firstDayIndex && 7*j+i <= lastDayIndex): the date should be of the current month and not of the prvious or next month -->
+                <!-- marked-date: if the date has an entry attached to it -->
+                <!-- selected-date: if the date has been clicked -->
+                <!-- selected-marked: if the selected date has been marked -->
+                <span ngClass="selected-marked float-right"
+                  *ngIf="markedDates?.indexOf(day) !== -1 && (7*j+i >= firstDayIndex && 7*j+i <= lastDayIndex) && selectedDateButton === day">
+                </span>
+                {{day}}
+
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

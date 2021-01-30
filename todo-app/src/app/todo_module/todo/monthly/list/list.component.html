@@ -1,0 +1,270 @@
+<div class="bg-primary row justify-content-center" style="z-index: 1;" *ngIf="loading">
+  <div class="loader"></div>
+</div>
+
+
+<div class="row justify-content-center align-content-start no-scrollbar mt-3" [ngClass]="{'monthly__list-display': ((screenSize !== 'xs' && screenSize !== 'sm') && toggleMode === 'monthly'),
+              'daily__list-display': ((screenSize !== 'xs' && screenSize !== 'sm') && toggleMode === 'daily')}">
+
+  <ul class="list-group list-group-flush col-11 col-sm-10 col-md-8 my-2 pointer"
+    [ngClass]="{'my-5': ((screenSize === 'xs' || screenSize === 'sm') && toggleMode === 'monthly'), 
+                'my-4': ((screenSize === 'md' || screenSize === 'lg') && toggleMode === 'monthly') || toggleMode === 'daily'}">
+    
+    <!-- gap between the bottom and where the list ends -->
+
+
+    <!-- list display for monthly toggle -->
+    <ng-container *ngIf="toggleMode === 'monthly'">
+      <li class="list-group-item rounded mt-1" [ngClass]="{'active-time': today.getHours() === item.time.hour}"
+        *ngFor="let item of todoItems" [@list]>
+        <div class="row">
+          <div class="col-12">
+            <small>
+              <span class="text-warning" *ngIf="toggleMode === 'monthly'">
+                {{months[item.date.month]}} {{item.date.day}}, {{item.date.year}}
+              </span>
+              <div class="w-100"></div>
+              <span class="text-info">
+                {{formatTime(item.time.hour)}} : {{formatTime(item.time.minute)}}
+              </span>
+            </small>
+
+            <!-- Item options for editing and deleting -->
+
+            <div class="dropdown float-right">
+              <button class="btn text-light" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                  class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
+                  <path
+                    d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
+                </svg>
+              </button>
+              <div class="dropdown-menu" style="background-color: #2b2a2a;" aria-labelledby="dropdownMenuButton">
+                <!-- Update Button -->
+                <span type="button" class="dropdown-item text-light" data-toggle="modal" data-target="#updateItemModal"
+                  (click)="selectedItem = item">Edit</span>
+                <!-- Delete Button -->
+                <span type="button" class="dropdown-item text-light" data-toggle="modal" data-target="#deleteItemModal"
+                  (click)="selectedItem = item;">Delete</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Display the item content -->
+        {{item.task}}
+      </li>
+    </ng-container>
+
+    <!-- list display for daily toggle -->
+    <ng-container *ngIf="toggleMode === 'daily'">
+      <li class="list-group-item rounded mt-1" [ngClass]="{'border-top': borderTopId === i, 
+                    'border-bottom': borderBottomId === i,
+                    'border-left border-right': borderMidId.indexOf(i) !== -1,
+                    'border-bottom-0': borderMidId.indexOf(i) !== -1 && i !== borderBottomId,
+                    'border-success':  borderMidId.indexOf(i) !== -1 && i === borderTopId,
+                    'border-danger':  borderMidId.indexOf(i) !== -1 && i === borderBottomId,
+                    'border-primary':  borderMidId.indexOf(i) !== -1 && i !== borderBottomId && i !== borderTopId}"
+        *ngFor="let item of todoItems; let i = index" [@list]>
+        <div class="row">
+          <div class="col-12">
+            <small>
+              <div class="w-100"></div>
+              <span class="text-info">
+                {{formatTime(item.time.hour)}} : {{formatTime(item.time.minute)}}
+              </span>
+            </small>
+
+            <!-- Item options for editing and deleting -->
+
+            <div class="dropdown float-right">
+              <button class="btn text-light" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                  class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
+                  <path
+                    d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
+                </svg>
+              </button>
+              <div class="dropdown-menu" style="background-color: #2b2a2a;" aria-labelledby="dropdownMenuButton">
+                <!-- Update Button -->
+                <span type="button" class="dropdown-item text-light" data-toggle="modal" data-target="#updateItemModal"
+                  (click)="selectedItem = item">Edit</span>
+                <!-- Delete Button -->
+                <span type="button" class="dropdown-item text-light" data-toggle="modal" data-target="#deleteItemModal"
+                  (click)="selectedItem = item;">Delete</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Display the item content -->
+        {{item.task}}
+      </li>
+    </ng-container>
+  </ul>
+
+  <!-- Create Item Button -->
+  <div class="col-12 fixed-bottom text-center mb-2">
+    <button type="button" class="btn" data-toggle="modal" data-target="#createItemModal">
+      <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor"
+        class="bi bi-plus rounded-circle text-light bg-primary pointer" viewBox="0 0 16 16">
+        <path
+          d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+      </svg>
+    </button>
+  </div>
+
+  <!--Create Modal -->
+  <div class="modal fade" id="createItemModal" tabindex="-1" role="dialog" aria-labelledby="createItemModal"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content" style="background-color: #332f2f;">
+        <div class="modal-header">
+          <h5 class="modal-title text-light">Add Item</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form #f="ngForm" (ngSubmit)="addItem(f)">
+          <div class="modal-body">
+
+            <div class="form-group">
+              <label for="todo_item" class="text-light justify-content-center row">Todo Item</label>
+              <textarea required type="email" class="form-control" id="todo_item" aria-describedby="todo_item"
+                placeholder="Task to be done" name="task" ngModel></textarea>
+            </div>
+
+            <div class="form-row">
+              <div class="col-6">
+                <label for="date" class="text-light justify-content-center row">Date</label>
+                <select required class="custom-select" id="date" name="date" #markedCreateDate="ngModel"
+                  [ngModel]="getCreateModalDefaultDate(markedCreateMonth.value)">
+                  <option [value]="date" *ngFor="let date of getDatesArray(markedCreateMonth.value)">
+                    {{date}}</option>
+                </select>
+              </div>
+              <div class="col-6">
+                <label for="month" class="text-light justify-content-center row">Month</label>
+                <select required class="custom-select" id="month" name="month" #markedCreateMonth="ngModel"
+                  [ngModel]="selectedDate?.month">
+
+                  <option [value]="i" *ngFor="let month of months; let i = index">{{month}}</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="col-6">
+                <label for="hour" class="text-light justify-content-center row">Hour</label>
+                <select required class="custom-select" id="hour" name="hour" [ngModel]="'00'">
+                  <option [value]="hour" *ngFor="let hour of hours">{{hour}}</option>
+                </select>
+              </div>
+              <div class="col-6">
+                <label for="minute" class="text-light justify-content-center row">Minute</label>
+                <select required class="custom-select" id="minute" name="minute" [ngModel]="'00'">
+                  <option [value]="min" *ngFor="let min of minutes">{{min}}</option>
+                </select>
+              </div>
+            </div>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closeCreateModal" (click)="resetCreateFormOnClose(f)">Close</button>
+            <button type="submit" class="btn btn-primary"
+              [disabled]="f.form.invalid">Create</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!--Edit Modal -->
+  <div class="modal fade" id="updateItemModal" tabindex="-1" role="dialog" aria-labelledby="updateItemModal"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content" style="background-color: #332f2f;">
+        <div class="modal-header">
+          <h5 class="modal-title text-light">Edit Item</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form #uf="ngForm" (ngSubmit)="updateItem(selectedItem._id, uf)">
+          <div class="modal-body">
+
+            <div class="form-group">
+              <label for="todo_item" class="text-light justify-content-center row">Todo Item</label>
+              <textarea required type="email" class="form-control" id="todo_item" aria-describedby="todo_item"
+                placeholder="Task to be done" name="task" [ngModel]="selectedItem?.task" ngModel></textarea>
+            </div>
+
+            <div class="form-row">
+              <div class="col-6">
+                <label for="date" class="text-light justify-content-center row">Date</label>
+                <select required class="custom-select" id="date" name="date" #markedDate="ngModel"
+                  [ngModel]="getUpdateModalDefaultDate(markedMonth.value)">
+                  <option [value]="date" *ngFor="let date of getDatesArray(markedMonth.value)">
+                    {{date}}</option>
+                </select>
+              </div>
+              <div class="col-6">
+                <label for="month" class="text-light justify-content-center row">Month</label>
+                <select required class="custom-select" id="month" name="month" #markedMonth="ngModel"
+                  [ngModel]="selectedItem?.date.month">
+
+                  <option [value]="i" *ngFor="let month of months; let i = index">{{month}}</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="col-6">
+                <label for="hour" class="text-light justify-content-center row">Hour</label>
+                <select required class="custom-select" id="hour" name="hour"
+                  [ngModel]="formatTime(selectedItem?.time.hour)">
+                  <option [value]="hour" *ngFor="let hour of hours">{{hour}}</option>
+                </select>
+              </div>
+              <div class="col-6">
+                <label for="minute" class="text-light justify-content-center row">Minute</label>
+                <select required class="custom-select" id="minute" name="minute"
+                  [ngModel]="formatTime(selectedItem?.time.minute)">
+                  <option [value]="min" *ngFor="let min of minutes">{{min}}</option>
+                </select>
+              </div>
+            </div>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closeUpdateModal"
+              (click)="resetUpdateFormOnClose(uf)">Close</button>
+            <button type="submit" class="btn btn-primary" [disabled]="!(uf.valid && uf.dirty)">Update</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!--Delete Modal -->
+  <div class="modal fade" id="deleteItemModal" tabindex="-1" role="dialog" aria-labelledby="deleteItemModal"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content" style="background-color: #332f2f;">
+        <div class="modal-header">
+          <h5 class="modal-title text-light">Confirm Delete</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body text-light">
+          Do you wish to delete this item?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closeDeleteModal">Close</button>
+          <button type="submit" class="btn btn-danger"
+            (click)="deleteItem(selectedItem._id) ;hideModal('closeDeleteModal')">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
