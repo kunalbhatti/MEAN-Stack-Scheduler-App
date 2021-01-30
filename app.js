@@ -39,7 +39,7 @@ app.use('/auth', authController);
 app.use('/app', todoController);
 
 app.get('/*', function (req, res) {
-    res.sendFile(path.join(__dirname + '/dist/index.html'));
+    res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 
 mongoConnect(() => {
