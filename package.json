@@ -20,5 +20,9 @@
     "mongodb": "^3.6.3",
     "nodemailer": "^6.4.17",
     "nodemailer-sendgrid-transport": "^0.2.0"
+  },
+  "engines": {
+    "node": "15.5.0",
+    "npm": "7.3.0"
   }
 }
