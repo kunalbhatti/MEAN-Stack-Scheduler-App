@@ -1,9 +1,12 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const path = require('path');
 
 const app = express();
 const port = process.env.PORT || 8080;
+
+
 
 const mongoConnect = require('./util/database.util').mongoConnect;
 const authController = require('./controllers/auth.controller');
