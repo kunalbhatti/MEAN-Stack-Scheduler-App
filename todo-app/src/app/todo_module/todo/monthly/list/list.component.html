@@ -13,6 +13,14 @@
     <!-- gap between the bottom and where the list ends -->
 
 
+    <ng-container *ngIf = "noItemFound">
+      <div class="row">
+        <div class="col-12 text-muted text-center">
+          No Items Found
+        </div>
+      </div>
+    </ng-container>
+    
     <!-- list display for monthly toggle -->
     <ng-container *ngIf="toggleMode === 'monthly'">
       <li class="list-group-item rounded mt-1" [ngClass]="{'active-time': today.getHours() === item.time.hour}"

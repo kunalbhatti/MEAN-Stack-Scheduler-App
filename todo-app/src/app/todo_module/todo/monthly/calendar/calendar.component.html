@@ -1,7 +1,7 @@
 <div class="row align-content-start text-light">
   <div class="col-12 h5 mt-1 d-flex align-items-start justify-content-center" style="height: 15%;">
       <!-- Get Previous Month -->
-    <button [disabled] = "pageScrolled" class="btn pointer text-light" (click)="monthCount = monthCount - 1; getDates(year, monthCount)">
+    <button [disabled] = "pageScrolled && markedDates.length > 0" class="btn pointer text-light" (click)="monthCount = monthCount - 1; getDates(year, monthCount)">
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
         class="bi bi-chevron-double-left" viewBox="0 0 16 16">
         <path fill-rule="evenodd"
@@ -13,7 +13,7 @@
     <!-- Display the Month and th Selected -->
     <button disabled class="btn text-light">{{selectedMonth}}, {{year}}</button>
     <!-- Get Next Month -->
-    <button [disabled] = "pageScrolled" class="btn pointer text-light" (click)="monthCount = monthCount + 1; getDates(year, monthCount)">
+    <button [disabled] = "pageScrolled && markedDates.length > 0" class="btn pointer text-light" (click)="monthCount = monthCount + 1; getDates(year, monthCount)">
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
         class="bi bi-chevron-double-right" viewBox="0 0 16 16">
         <path fill-rule="evenodd"

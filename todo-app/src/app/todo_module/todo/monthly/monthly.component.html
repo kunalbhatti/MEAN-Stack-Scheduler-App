@@ -1,4 +1,4 @@
-<div class="row justify-content-center text-light" *ngIf="pageScrolled">
+<div class="row justify-content-center text-light" *ngIf="pageScrolled && markedDates.length > 0">
   <!-- if we are scrolling on an xs or sm screen, display the current month and year if scrolled-->
   <button class="btn text-light" disabled>{{month[selectedDate.month]}}, {{selectedDate.year}}</button>
 </div>

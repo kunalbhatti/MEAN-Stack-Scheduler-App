@@ -35,7 +35,6 @@ import {
   trigger
 } from '@angular/animations';
 import { NotificationService } from 'src/app/services/notification.service';
-import { ThrowStmt } from '@angular/compiler';
 
 
 @Component({
@@ -91,6 +90,7 @@ export class ListComponent implements OnInit, OnChanges {
   }
   // The items fetched from the DB are stored in this variable.
   todoItems: TodoItem[] = [];
+  noItemFound: boolean;
 
   // border id's
   borderTopId: number;
@@ -147,6 +147,12 @@ export class ListComponent implements OnInit, OnChanges {
         }).subscribe(
           (items: TodoItem[]) => {
             this.todoItems = items;
+            this.updateNoItemFound();
+            if(this.todoItems.length === 0) {
+              this.noItemFound = true;
+            } else {
+              this.noItemFound = false;
+            }
             
             // sorting the todo entries by date and time
             this.sortItems(this.todoItems);
@@ -177,6 +183,7 @@ export class ListComponent implements OnInit, OnChanges {
     }
   }
 
+
   addItem(f: NgForm): void {
 
     let hour = +f.value.hour;
@@ -198,6 +205,7 @@ export class ListComponent implements OnInit, OnChanges {
     this.appService.addPost(body).pipe(first()).subscribe(
       (item: TodoItem) => {
         this.todoItems.push(item);
+        this.updateNoItemFound();
         this.sortItems(this.todoItems);
 
         this.markedDatesArr.push(body.date.day);
@@ -279,6 +287,8 @@ export class ListComponent implements OnInit, OnChanges {
             this.refreshBorderPosition();
           }
 
+          this.updateNoItemFound();
+
           this.markedDates.emit(this.markedDatesArr);
           this.showToast('Item updated successfully.', 'success');
 
@@ -319,6 +329,7 @@ export class ListComponent implements OnInit, OnChanges {
           if(this.toggleMode === 'daily') {
             this.refreshBorderPosition();
           }
+          this.updateNoItemFound();
 
           this.showToast('Item deleated successfully.', 'success');
         }
@@ -363,7 +374,7 @@ export class ListComponent implements OnInit, OnChanges {
 
   resetCreateFormOnClose(rf: NgForm): void {
     rf.controls['task'].reset();
-    rf.controls['date'].setValue(this.selectedDate.day);
+    rf.controls['date'].setValue("1");
     rf.controls['month'].setValue(this.selectedDate.month);
     rf.controls['hour'].setValue(this.formatTime(0));
     rf.controls['minute'].setValue(this.formatTime(0));
@@ -377,28 +388,28 @@ export class ListComponent implements OnInit, OnChanges {
   }
 
 
-  getCreateModalDefaultDate(month: number): number {
-    if (this.selectedDate ?.day) {
+  getCreateModalDefaultDate(month: number): any {
+    if (this.selectedDate?.day) {
       if (+month != +this.selectedDate?.month) {
-        return 1;
+        return "1";
       }
       return this.selectedDate?.day;
     }
 
-    return null;
+    return "1";
   }
 
-  getUpdateModalDefaultDate(month: number): number {
+  getUpdateModalDefaultDate(month: number): any {
     if (this.selectedItem) {
       if (+month !== +this.selectedItem.date.month) {
         // while updating if we want to reschedule the task to some other month, set the default date of that month to 1
-        return 1;
+        return "1";
       }
 
       return this.selectedItem.date.day;
     }
 
-    return null;
+    return "1";
   }
 
   sortItems(itemList: TodoItem[]) {
@@ -415,6 +426,13 @@ export class ListComponent implements OnInit, OnChanges {
     }
   }
 
+  updateNoItemFound() {
+    if(this.todoItems.length === 0) {
+      this.noItemFound = true;
+    } else {
+      this.noItemFound = false;
+    }
+  }
 
 
   refreshBorderPosition(){
