@@ -1,7 +1,7 @@
 import {
   NgModule
 } from "@angular/core";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+
 import {
   RouterModule,
   Routes
@@ -13,19 +13,41 @@ import {
 import {
   LoggedInGuard
 } from "./guards/logged-in.guard";
-import { PageNotFoundComponent } from "./page-not-found/page-not-found.component";
+import {
+  PageNotFoundComponent
+} from "./page-not-found/page-not-found.component";
 
-const routes: Routes = [{
+const routes: Routes = [
+  {
+    path: '',
+    redirectTo: 'auth/login',
+    pathMatch: 'full'
+  },
+  {
+    path: 'auth',
+    redirectTo: '/auth/login',
+    pathMatch: 'full'
+  },
+  {
+    path: 'todo',
+    redirectTo: '/todo/monthly',
+    pathMatch: 'full'
+  }
+  ,{
     path: 'auth',
     loadChildren: () => import('./auth_module/auth.module').then(m => m.AuthModule),
     canActivate: [LoggedInGuard],
-    data: {animation: 'LoginPage'}
+    data: {
+      animation: 'LoginPage'
+    }
   },
   {
     path: 'todo',
     loadChildren: () => import('./todo_module/todo.module').then(m => m.TodoModule),
     canActivate: [AuthGuard],
-    data: {animation: 'TodoPage'}
+    data: {
+      animation: 'TodoPage'
+    }
   },
   {
     path: '**',

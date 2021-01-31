@@ -29,7 +29,6 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.valid = true;
-  
   }
 
   onLogin(f: NgForm) {

@@ -19,8 +19,8 @@ export class AuthService {
     'Content-Type': 'application/json'
   });
 
-  //url = "http://localhost:3000/";
-  url = '';
+  url = "http://localhost:8080/";
+  //url = '';
 
   constructor(private http: HttpClient) {}
 
@@ -49,7 +49,10 @@ export class AuthService {
 
   // returns an observable which will be consumed by the auth-guard
   checkIfLoggedIn(): Observable < any > {
-    const token = localStorage.getItem('login-token');
+    let token = localStorage.getItem('login-token');
+    if(!token) {
+      token = '';
+    }
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'x-access-token': token
