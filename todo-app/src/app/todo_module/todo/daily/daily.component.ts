@@ -1,14 +1,9 @@
 import {
-  ThrowStmt
-} from '@angular/compiler';
-import {
   Component,
   Input,
   OnInit
 } from '@angular/core';
-import {
-  first
-} from 'rxjs/operators';
+import { MediaService } from './../../../services/media.service';
 
 @Component({
   selector: 'app-daily',
@@ -17,7 +12,9 @@ import {
 })
 export class DailyComponent implements OnInit {
 
-  constructor() {}
+  constructor(private mediaService: MediaService) {}
+
+  screenSize: string;
 
   months: string[] = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
@@ -29,6 +26,12 @@ export class DailyComponent implements OnInit {
   };
 
   ngOnInit(): void {
+
+    this.mediaService.getScreenSize().subscribe(
+      mq => {
+        this.screenSize = mq[0].mqAlias;
+      }
+    )
 
     let today = new Date();
 
