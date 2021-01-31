@@ -35,7 +35,7 @@ export class MonthlyComponent implements OnInit {
   // register the scroll
   @HostListener('window:scroll', ['$event']) onScrollEvent(event){
     
-    if(event.target.scrollTop > 5) {
+    if(event.target.scrollTop > 1) {
       this.pageScrolled = true;
     } else {
       this.pageScrolled = false;
