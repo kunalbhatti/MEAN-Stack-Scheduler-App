@@ -22,8 +22,8 @@ import {
 })
 export class AppService {
 
-  url = "http://localhost:8080/";
-  //url = '';
+  //url = "http://localhost:8080/";
+  url = '';
   constructor(private httpClient: HttpClient) {}
 
   getPost(body: {
